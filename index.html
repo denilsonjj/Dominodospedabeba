@@ -11,311 +11,117 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Definindo as variáveis de cor para os temas */
-        :root {
-            --font-family: 'Poppins', sans-serif;
-            --bg-color: #f4f7f9;
-            --card-color: #ffffff;
-            --text-color: #2c3e50;
-            --heading-color: #34495e;
-            --border-color: #e0e0e0;
-            --primary-color: #243782;
-            --primary-text: #ffffff;
-            --danger-color: #e74c3c;
-            --success-color: #2ecc71;
-            --shadow-color: rgba(0, 0, 0, 0.08);
-        }
-
-        body.dark-mode {
-            --bg-color: #1a1a2e;
-            --card-color: #16213e;
-            --text-color: #e0e0e0;
-            --heading-color: #ffffff;
-            --border-color: #3a476a;
-            --primary-color: #0f3460;
-        }
-
-        /* Estilos Gerais */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-family);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        /* Cabeçalho com Título e Botão de Tema */
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 15px;
-            background-color: var(--card-color);
-            box-shadow: 0 2px 4px var(--shadow-color);
-            margin-bottom: 25px;
-        }
-
-        .main-header h1 {
-            color: var(--heading-color);
-            font-size: 1.5rem;
-        }
-
-        .theme-btn {
-            background: none;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .theme-btn:hover {
-            background-color: var(--bg-color);
-        }
-
-        /* Estilo dos Cards */
-        .card {
-            background-color: var(--card-color);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            padding: 25px;
-            margin-bottom: 25px;
-            transition: background-color 0.3s;
-        }
-
-        .card h2 {
-            color: var(--heading-color);
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        /* Notificações Suaves */
-        .notification {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: 500;
-            display: none; /* Começa escondido */
-        }
-        .notification.error {
-            background-color: #ffdddd;
-            color: #d8000c;
-        }
-
-        /* Formulário de Adição */
-        .form-container {
-            display: flex;
-        }
-
-        #playerInput {
-            flex-grow: 1;
-            padding: 12px;
-            font-size: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px 0 0 8px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-        #playerInput:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        /* Estilos de Botões */
-        .btn-primary, .btn-danger, .add-win-btn {
-            padding: 12px 20px;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: opacity 0.2s;
-        }
-        .btn-primary:hover, .btn-danger:hover, .add-win-btn:hover {
-            opacity: 0.85;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--primary-text);
-            border-radius: 0 8px 8px 0;
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: #ffffff;
-            border-radius: 8px;
-            width: 100%;
-        }
-
-        /* Lista de Jogadores */
-        .player-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 5px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .player-item:last-child { border-bottom: none; }
-
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-grow: 1;
-        }
-
-        .player-name {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .win-count {
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: var(--success-color);
-            opacity: 0.8;
-        }
-
-        .delete-btn {
-            background: none;
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
-            opacity: 0.5;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-        .delete-btn:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .player-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-undo {
-            background-color: #f39c12;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: opacity 0.2s;
-            min-width: 90px;
-            text-align: center;
-        }
-        .btn-undo:hover {
-            opacity: 0.85;
-        }
-
-        .add-win-btn {
-            background-color: var(--success-color);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            min-width: 90px;
-            text-align: center;
-        }
-        .add-win-btn.vitoria-registrada {
-            background-color: #27ae60;
-        }
-
-        /* Gráficos */
-        .chart-title {
-            margin-top: 30px;
-        }
-
-        /* ESTILOS RESPONSIVOS PARA MOBILE */
-        @media (max-width: 480px) {
-            .player-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .player-actions {
-                width: 100%;
-                justify-content: flex-end;
-            }
-
-            .main-header h1 {
-                font-size: 1.2rem;
-            }
-        }
+        /* O seu CSS completo está aqui, sem alterações */
+        :root{--font-family:'Poppins',sans-serif;--bg-color:#f4f7f9;--card-color:#fff;--text-color:#2c3e50;--heading-color:#34495e;--border-color:#e0e0e0;--primary-color:#243782;--primary-text:#fff;--danger-color:#e74c3c;--success-color:#2ecc71;--shadow-color:rgba(0,0,0,.08)}body.dark-mode{--bg-color:#1a1a2e;--card-color:#16213e;--text-color:#e0e0e0;--heading-color:#fff;--border-color:#3a476a;--primary-color:#0f3460}*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--font-family);background-color:var(--bg-color);color:var(--text-color);transition:background-color .3s,color .3s}.container{max-width:700px;margin:0 auto;padding:15px}.login-container{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}.login-form{width:100%;max-width:400px}.login-form input{width:100%;padding:12px;font-size:1rem;border:1px solid var(--border-color);border-radius:8px;background-color:var(--bg-color);color:var(--text-color);margin-bottom:15px}.login-form button{width:100%}.login-error{color:var(--danger-color);text-align:center;margin-top:15px;font-weight:500;display:none}.main-header{display:flex;justify-content:space-between;align-items:center;padding:20px 15px;background-color:var(--card-color);box-shadow:0 2px 4px var(--shadow-color);margin-bottom:25px}.main-header h1{color:var(--heading-color);font-size:1.5rem}.theme-btn{background:0 0;border:1px solid var(--border-color);border-radius:50%;width:40px;height:40px;font-size:1.2rem;cursor:pointer;transition:background-color .3s}.theme-btn:hover{background-color:var(--bg-color)}.card{background-color:var(--card-color);border-radius:12px;box-shadow:0 4px 12px var(--shadow-color);padding:25px;margin-bottom:25px;transition:background-color .3s}.card h2{color:var(--heading-color);margin-bottom:20px;border-bottom:1px solid var(--border-color);padding-bottom:10px}.notification{padding:10px;margin-bottom:15px;border-radius:6px;text-align:center;font-weight:500;display:none}.notification.error{background-color:#ffdddd;color:#d8000c}.form-container{display:flex}#playerInput{flex-grow:1;padding:12px;font-size:1rem;border:1px solid var(--border-color);border-radius:8px 0 0 8px;background-color:var(--bg-color);color:var(--text-color)}#playerInput:focus{outline:0;border-color:var(--primary-color)}.btn-primary,.btn-danger,.add-win-btn{padding:12px 20px;font-size:1rem;border:none;cursor:pointer;font-weight:500;transition:opacity .2s}.btn-primary:hover,.btn-danger:hover,.add-win-btn:hover{opacity:.85}.btn-primary{background-color:var(--primary-color);color:var(--primary-text);border-radius:8px}.btn-danger{background-color:var(--danger-color);color:#fff;border-radius:8px;width:100%}.player-item{display:flex;justify-content:space-between;align-items:center;padding:12px 5px;border-bottom:1px solid var(--border-color)}.player-item:last-child{border-bottom:none}.player-info{display:flex;align-items:center;gap:12px;flex-grow:1}.player-name{font-size:1.1rem;font-weight:500}.win-count{font-size:.85rem;font-weight:400;color:var(--success-color);opacity:.8}.delete-btn{background:0 0;border:none;font-size:1rem;cursor:pointer;opacity:.5;transition:opacity .2s,transform .2s}.delete-btn:hover{opacity:1;transform:scale(1.1)}.player-actions{display:flex;align-items:center;gap:8px}.btn-undo{background-color:#f39c12;color:#fff;padding:8px 12px;border-radius:6px;font-size:1rem;border:none;cursor:pointer;font-weight:500;transition:opacity .2s;min-width:90px;text-align:center}.btn-undo:hover{opacity:.85}.add-win-btn{background-color:var(--success-color);color:#fff;padding:8px 12px;border-radius:6px;min-width:90px;text-align:center}.add-win-btn.vitoria-registrada{background-color:#27ae60}.chart-title{margin-top:30px}@media (max-width:480px){.player-item{flex-direction:column;align-items:flex-start;gap:12px}.player-actions{width:100%;justify-content:flex-end}.main-header h1{font-size:1.2rem}}
     </style>
-    </head>
+</head>
 <body>
-
-    <header class="main-header">
-        <h1>Dominó dos Peda Beba</h1>
-        <button id="theme-toggle" class="theme-btn">🌙</button>
-    </header>
-
-    <div class="container">
-        <main>
-            <div class="card">
-                <h2>Adicionar Jogador</h2>
-                <div id="notification" class="notification"></div>
-                <div class="form-container">
-                    <input type="text" id="playerInput" placeholder="Nome do jogador...">
-                    <button id="addPlayerButton" class="btn-primary">Adicionar</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>Jogadores</h2>
-                <div id="playerList">
-                    </div>
-            </div>
-            
-            <div class="card">
-                <h2>Estatísticas</h2>
-                
-                <h3>Vitórias Diárias (Hoje)</h3>
-                <canvas id="dailyWinsChart"></canvas>
-                
-                <h3 class="chart-title">Últimos 7 dias</h3>
-                <canvas id="weeklyWinsChart"></canvas>
-                
-                <h3 class="chart-title">Vitórias no Mês</h3>
-                <canvas id="monthlyWinsChart"></canvas>
-
-                <h3 class="chart-title">Vitórias Totais (Geral)</h3>
-                <canvas id="totalWinsChart"></canvas>
-            </div>
-        </main>
-        
-        <footer>
-            <button id="resetButton" class="btn-danger">Resetar Todos os Dados</button>
-        </footer>
+    
+    <div id="login-container" class="login-container">
+        <div class="card login-form">
+            <h2>Login de Admin</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Usuário" required>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit" class="btn-primary">Entrar</button>
+            </form>
+            <p id="login-error" class="login-error"></p>
+        </div>
     </div>
 
+    <div id="app-container" style="display: none;">
+        <header class="main-header">
+            <h1>Dominó dos Peda Beba</h1>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+        </header>
+
+        <div class="container">
+            <main>
+                <div class="card">
+                    <h2>Adicionar Jogador</h2>
+                    <div id="notification" class="notification"></div>
+                    <div class="form-container">
+                        <input type="text" id="playerInput" placeholder="Nome do jogador...">
+                        <button id="addPlayerButton" class="btn-primary">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Jogadores</h2>
+                    <div id="playerList"></div>
+                </div>
+                
+                <div class="card">
+                    <h2>Estatísticas</h2>
+                    <h3>Vitórias Diárias (Hoje)</h3>
+                    <canvas id="dailyWinsChart"></canvas>
+                    <h3 class="chart-title">Últimos 7 dias</h3>
+                    <canvas id="weeklyWinsChart"></canvas>
+                    <h3 class="chart-title">Vitórias no Mês</h3>
+                    <canvas id="monthlyWinsChart"></canvas>
+                    <h3 class="chart-title">Vitórias Totais (Geral)</h3>
+                    <canvas id="totalWinsChart"></canvas>
+                </div>
+            </main>
+            
+            <footer>
+                <button id="resetButton" class="btn-danger">Resetar Todos os Dados</button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <script>
+ <script>
+        // --- ETAPA 1: CONFIGURAÇÃO DO SUPABASE ---
+        const SUPABASE_URL = 'https://llpwqxatcndnrjnbsunc.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxscHdxeGF0Y25kbnJqbmJzdW5jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ1MjM2NDIsImV4cCI6MjA3MDA5OTY0Mn0.JNUCIwLGytwmnH2lIh2T4GGJKOI_CmT0IizClQjXNIU';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- CREDENCIAIS DE LOGIN ---
+        const ADMIN_USER = 'admin';
+        const ADMIN_PASS = 'domino123';
+
         document.addEventListener('DOMContentLoaded', () => {
-            // --- LÓGICA DO MODO ESCURO ---
+            // --- LÓGICA DE LOGIN ---
+            const loginContainer = document.getElementById('login-container');
+            const appContainer = document.getElementById('app-container');
+            const loginForm = document.getElementById('loginForm');
+
+            async function showApp() {
+                loginContainer.style.display = 'none';
+                appContainer.style.display = 'block';
+                await render(); 
+            }
+
+            if (sessionStorage.getItem('isLoggedIn') === 'true') {
+                showApp();
+            }
+
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const user = document.getElementById('username').value;
+                const pass = document.getElementById('password').value;
+                if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    await showApp();
+                } else {
+                    document.getElementById('login-error').textContent = 'Usuário ou senha inválidos.';
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            });
+
+            // --- LÓGICA PRINCIPAL DO APLICATIVO ---
             const themeToggleButton = document.getElementById('theme-toggle');
             const body = document.body;
-
+            const playerInput = document.getElementById('playerInput');
+            const addPlayerButton = document.getElementById('addPlayerButton');
+            const playerListDiv = document.getElementById('playerList');
+            const resetButton = document.getElementById('resetButton');
+            const notificationDiv = document.getElementById('notification');
+            
             if (localStorage.getItem('theme') === 'dark') {
                 body.classList.add('dark-mode');
                 themeToggleButton.textContent = '☀️';
@@ -330,31 +136,223 @@
                     localStorage.setItem('theme', 'light');
                     themeToggleButton.textContent = '🌙';
                 }
-                renderCharts(); // Redesenha gráficos para atualizar cores de texto
+                renderCharts(players);
             });
-
-            // --- REFERÊNCIAS AOS ELEMENTOS E VARIÁVEIS GLOBAIS ---
-            const playerInput = document.getElementById('playerInput');
-            const addPlayerButton = document.getElementById('addPlayerButton');
-            const playerListDiv = document.getElementById('playerList');
-            const resetButton = document.getElementById('resetButton');
-            const notificationDiv = document.getElementById('notification');
-
-            // Contextos dos gráficos
+            
+            let players = [];
+            let charts = {};
+            let notificationTimeout;
+            
             const dailyCtx = document.getElementById('dailyWinsChart').getContext('2d');
             const weeklyCtx = document.getElementById('weeklyWinsChart').getContext('2d');
             const monthlyCtx = document.getElementById('monthlyWinsChart').getContext('2d');
             const totalCtx = document.getElementById('totalWinsChart').getContext('2d');
 
-            // Variáveis para dados e controle
-            let players = JSON.parse(localStorage.getItem('playersData')) || [];
-            let charts = {};
-            let notificationTimeout;
+            // --- FUNÇÕES DE DADOS OTIMIZADAS ---
 
-            // --- FUNÇÕES DE DADOS ---
-            function saveData() {
-                localStorage.setItem('playersData', JSON.stringify(players));
+            // As funções agora não precisam ser 'async' porque a UI atualiza antes
+            function addPlayer() {
+                const playerName = playerInput.value.trim();
+                if (!playerName) { showNotification('Digite o nome do jogador.'); return; }
+                if (players.some(p => p.name.toLowerCase() === playerName.toLowerCase())) {
+                    showNotification('Este jogador já existe!'); return;
+                }
+                
+                playerInput.value = '';
+                
+                // UI Otimista: Adicionamos um jogador temporário para a UI atualizar na hora.
+                const tempPlayer = { id: Date.now(), name: playerName, wins: [], isTemporary: true };
+                players.push(tempPlayer);
+                renderPlayers(players);
+                
+                // Em segundo plano, salva no Supabase
+                supabaseClient.from('jogadores').insert({ name: playerName, wins: [] }).then(({error}) => {
+                    if (error) {
+                        showNotification('Erro ao salvar jogador.');
+                        // Se der erro, removemos o jogador temporário e renderizamos de novo
+                        players = players.filter(p => !p.isTemporary);
+                        renderPlayers(players);
+                    }
+                });
             }
+            
+            function deletePlayer(playerId) {
+                const player = players.find(p => p.id === playerId);
+                if (confirm(`Remover ${player.name}?`)) {
+                    // UI Otimista: Remove da lista local e atualiza a tela
+                    const originalPlayers = [...players];
+                    players = players.filter(p => p.id !== playerId);
+                    renderPlayers(players);
+                    renderCharts(players);
+
+                    // Em segundo plano, deleta no Supabase
+                    supabaseClient.from('jogadores').delete().eq('id', playerId).then(({error}) => {
+                        if (error) {
+                            showNotification('Erro ao remover jogador.');
+                            players = originalPlayers; // Restaura se der erro
+                            renderPlayers(players);
+                            renderCharts(players);
+                        }
+                    });
+                }
+            }
+
+            function addWin(playerId, event) {
+                const button = event.target;
+                button.disabled = true; // Desabilita o botão na hora
+
+                const playerIndex = players.findIndex(p => p.id === playerId);
+                if (playerIndex === -1) return;
+
+                // UI Otimista: Atualiza a lista local e a tela
+                const updatedWins = [...(players[playerIndex].wins || []), Date.now()];
+                players[playerIndex].wins = updatedWins;
+                renderPlayers(players);
+                renderCharts(players);
+
+                // Em segundo plano, salva no Supabase
+                supabaseClient.from('jogadores').update({ wins: updatedWins }).eq('id', playerId).then(({error}) => {
+                    if (error) showNotification('Erro ao salvar vitória.');
+                    // O botão será reabilitado quando o real-time atualizar a tela
+                });
+            }
+
+            function undoLastWin(playerId) {
+                const playerIndex = players.findIndex(p => p.id === playerId);
+                if (playerIndex === -1 || !players[playerIndex].wins || players[playerIndex].wins.length === 0) return;
+
+                // UI Otimista
+                const updatedWins = [...players[playerIndex].wins];
+                updatedWins.pop();
+                players[playerIndex].wins = updatedWins;
+                renderPlayers(players);
+                renderCharts(players);
+
+                // Em segundo plano
+                supabaseClient.from('jogadores').update({ wins: updatedWins }).eq('id', playerId).then(({error}) => {
+                    if (error) showNotification('Erro ao desfazer vitória.');
+                });
+            }
+
+            async function resetData() {
+                if (confirm('APAGAR TODOS OS DADOS? ESTA AÇÃO É IRREVERSÍVEL!')) {
+                    // UI Otimista
+                    players = [];
+                    renderPlayers(players);
+                    renderCharts(players);
+
+                    // Em segundo plano
+                    await supabaseClient.from('jogadores').delete().neq('id', -1);
+                }
+            }
+            
+            // --- FUNÇÕES DE RENDERIZAÇÃO (sem alterações) ---
+            function renderPlayers(currentPlayers) {
+                playerListDiv.innerHTML = '';
+                if (!currentPlayers || currentPlayers.length === 0) {
+                    playerListDiv.innerHTML = '<p>Nenhum jogador adicionado ainda.</p>';
+                    return;
+                }
+                const sortedPlayers = [...currentPlayers].sort((a, b) => a.name.localeCompare(b.name));
+                sortedPlayers.forEach(player => {
+                    const playerItem = document.createElement('div');
+                    playerItem.className = 'player-item';
+                    const playerInfo = document.createElement('div');
+                    playerInfo.className = 'player-info';
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'delete-btn';
+                    deleteButton.title = `Remover ${player.name}`;
+                    deleteButton.textContent = '❌';
+                    deleteButton.onclick = () => deletePlayer(player.id);
+                    const playerNameSpan = document.createElement('span');
+                    playerNameSpan.className = 'player-name';
+                    playerNameSpan.textContent = player.name;
+                    const winCountSpan = document.createElement('span');
+                    winCountSpan.className = 'win-count';
+                    winCountSpan.textContent = `(${(player.wins || []).length} vitórias)`;
+                    playerInfo.appendChild(deleteButton);
+                    playerInfo.appendChild(playerNameSpan);
+                    playerInfo.appendChild(winCountSpan);
+                    const actionsContainer = document.createElement('div');
+                    actionsContainer.className = 'player-actions';
+                    if (player.wins && player.wins.length > 0) {
+                        const undoButton = document.createElement('button');
+                        undoButton.className = 'btn-undo';
+                        undoButton.textContent = 'Desfazer';
+                        undoButton.title = 'Remover última vitória';
+                        undoButton.onclick = () => undoLastWin(player.id);
+                        actionsContainer.appendChild(undoButton);
+                    }
+                    const addWinButton = document.createElement('button');
+                    addWinButton.className = 'add-win-btn';
+                    addWinButton.textContent = 'Venceu';
+                    addWinButton.onclick = (event) => addWin(player.id, event);
+                    actionsContainer.appendChild(addWinButton);
+                    playerItem.appendChild(playerInfo);
+                    playerItem.appendChild(actionsContainer);
+                    playerListDiv.appendChild(playerItem);
+                });
+            }
+            function renderCharts(currentPlayers = []) {
+                const now = new Date();
+                const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+                const sevenDaysAgo = new Date(new Date().setDate(now.getDate() - 6)).setHours(0, 0, 0, 0);
+                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+                const dailyData = getChartData(currentPlayers, timestamp => timestamp >= todayStart);
+                const weeklyData = getChartData(currentPlayers, timestamp => timestamp >= sevenDaysAgo);
+                const monthlyData = getChartData(currentPlayers, timestamp => timestamp >= monthStart);
+                const totalData = getChartData(currentPlayers, () => true);
+                createOrUpdateChart('daily', dailyCtx, 'Vitórias de Hoje', dailyData);
+                createOrUpdateChart('weekly', weeklyCtx, 'Últimos 7 dias', weeklyData);
+                createOrUpdateChart('monthly', monthlyCtx, 'Vitórias no Mês', monthlyData);
+                createOrUpdateChart('total', totalCtx, 'Vitórias Totais', totalData);
+            }
+            function getChartData(currentPlayers, filterFn) {
+                const dataMap = (currentPlayers || []).reduce((acc, player) => {
+                    const winCount = (player.wins || []).filter(filterFn).length;
+                    if (winCount > 0) { acc[player.name] = winCount; }
+                    return acc;
+                }, {});
+                const sortedLabels = Object.keys(dataMap).sort((a, b) => dataMap[b] - dataMap[a]);
+                const sortedData = sortedLabels.map(label => dataMap[label]);
+                return { labels: sortedLabels, data: sortedData };
+            }
+            function createOrUpdateChart(chartId, ctx, label, data) {
+                const isDarkMode = body.classList.contains('dark-mode');
+                const textColor = isDarkMode ? '#e0e0e0' : '#2c3e50';
+                if (charts[chartId]) { charts[chartId].destroy(); }
+                charts[chartId] = new Chart(ctx, {
+                    type: 'bar',
+                    data: { labels: data.labels, datasets: [{ label: label, data: data.data, backgroundColor: 'rgba(36, 55, 130, 0.7)', borderColor: 'rgba(36, 55, 130, 1)', borderWidth: 1, borderRadius: 4 }] },
+                    options: { plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => ` ${c.raw} vitórias` }}}, scales: { y: { beginAtZero: true, ticks: { color: textColor, stepSize: 1 } }, x: { ticks: { color: textColor } }}, responsive: true }
+                });
+            }
+
+            // A função render agora só busca os dados e desenha na tela
+            async function render() {
+                const { data, error } = await supabaseClient.from('jogadores').select('*');
+                if (error) { console.error('Erro ao buscar dados:', error); return; }
+                players = data;
+                renderPlayers(players);
+                renderCharts(players);
+            }
+
+            // O Real-time agora serve como um sincronizador de segurança
+            supabaseClient.channel('jogadores_changes')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'jogadores' },
+                    (payload) => {
+                        console.log('Sincronizando com a mudança da nuvem!', payload);
+                        render(); // Mantém todos os clientes sincronizados
+                    }
+                )
+                .subscribe();
+
+            // --- EVENT LISTENERS ---
+            addPlayerButton.addEventListener('click', addPlayer);
+            playerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addPlayer();
+            });
+            resetButton.addEventListener('click', resetData);
 
             function showNotification(message, type = 'error') {
                 clearTimeout(notificationTimeout);
@@ -365,217 +363,12 @@
                     notificationDiv.style.display = 'none';
                 }, 3000);
             }
-
-            function addPlayer() {
-                const playerName = playerInput.value.trim();
-                if (playerName && !players.some(p => p.name.toLowerCase() === playerName.toLowerCase())) {
-                    players.push({ name: playerName, wins: [] });
-                    playerInput.value = '';
-                    saveData();
-                    render();
-                } else if (!playerName) {
-                    showNotification('Por favor, digite o nome do jogador.');
-                } else {
-                    showNotification('Este jogador já existe!');
-                }
-            }
-
-            function deletePlayer(playerIndex) {
-                const playerName = players[playerIndex].name;
-                if (confirm(`Tem certeza que deseja remover ${playerName}? Todas as vitórias dele(a) serão perdidas.`)) {
-                    players.splice(playerIndex, 1);
-                    saveData();
-                    render();
-                }
-            }
-
-            function addWin(playerIndex, event) {
-                const button = event.target;
-                players[playerIndex].wins.push(Date.now());
-                saveData();
-
-                button.textContent = 'Registrado!';
-                button.disabled = true;
-                button.classList.add('vitoria-registrada');
-                renderCharts();
-
-                setTimeout(() => {
-                    button.textContent = 'Venceu';
-                    button.disabled = false;
-                    button.classList.remove('vitoria-registrada');
-                    renderPlayers(); // Atualiza a contagem de vitórias na lista
-                }, 1500);
-            }
-
-            function undoLastWin(playerIndex) {
-                const playerName = players[playerIndex].name;
-                const lastWinTimestamp = players[playerIndex].wins[players[playerIndex].wins.length - 1];
-                const lastWinDate = new Date(lastWinTimestamp).toLocaleString('pt-BR');
-
-                if (confirm(`Deseja remover a última vitória de ${playerName} (registrada em ${lastWinDate})?`)) {
-                    players[playerIndex].wins.pop();
-                    saveData();
-                    render();
-                }
-            }
-
-            function resetData() {
-                if (confirm('Você tem certeza que quer apagar TODOS os dados? Esta ação não pode ser desfeita.')) {
-                    players = [];
-                    localStorage.removeItem('playersData');
-                    render();
-                }
-            }
-
-            // --- FUNÇÕES DE RENDERIZAÇÃO ---
-            function renderPlayers() {
-                playerListDiv.innerHTML = '';
-                if (players.length === 0) {
-                    playerListDiv.innerHTML = '<p>Nenhum jogador adicionado ainda.</p>';
-                    return;
-                }
-
-                const sortedPlayers = [...players].sort((a, b) => a.name.localeCompare(b.name));
-
-                sortedPlayers.forEach(player => {
-                    const originalIndex = players.findIndex(p => p.name === player.name);
-
-                    const playerItem = document.createElement('div');
-                    playerItem.className = 'player-item';
-
-                    const playerInfo = document.createElement('div');
-                    playerInfo.className = 'player-info';
-
-                    const deleteButton = document.createElement('button');
-                    deleteButton.className = 'delete-btn';
-                    deleteButton.title = `Remover ${player.name}`;
-                    deleteButton.textContent = '❌';
-                    deleteButton.onclick = () => deletePlayer(originalIndex);
-
-                    const playerNameSpan = document.createElement('span');
-                    playerNameSpan.className = 'player-name';
-                    playerNameSpan.textContent = player.name;
-
-                    const winCountSpan = document.createElement('span');
-                    winCountSpan.className = 'win-count';
-                    winCountSpan.textContent = `(${player.wins.length} vitórias)`;
-
-                    playerInfo.appendChild(deleteButton);
-                    playerInfo.appendChild(playerNameSpan);
-                    playerInfo.appendChild(winCountSpan);
-
-                    const actionsContainer = document.createElement('div');
-                    actionsContainer.className = 'player-actions';
-
-                    if (player.wins.length > 0) {
-                        const undoButton = document.createElement('button');
-                        undoButton.className = 'btn-undo';
-                        undoButton.textContent = 'Desfazer';
-                        undoButton.title = 'Remover última vitória';
-                        undoButton.onclick = () => undoLastWin(originalIndex);
-                        actionsContainer.appendChild(undoButton);
-                    }
-
-                    const addWinButton = document.createElement('button');
-                    addWinButton.className = 'add-win-btn';
-                    addWinButton.textContent = 'Venceu';
-                    addWinButton.onclick = (event) => addWin(originalIndex, event);
-                    actionsContainer.appendChild(addWinButton);
-
-                    playerItem.appendChild(playerInfo);
-                    playerItem.appendChild(actionsContainer);
-                    playerListDiv.appendChild(playerItem);
-                });
-            }
-
-            function renderCharts() {
-                const now = new Date();
-                const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-                const sevenDaysAgo = new Date(new Date().setDate(now.getDate() - 6)).setHours(0,0,0,0);
-                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-
-                const dailyData = getChartData(timestamp => timestamp >= todayStart);
-                const weeklyData = getChartData(timestamp => timestamp >= sevenDaysAgo);
-                const monthlyData = getChartData(timestamp => timestamp >= monthStart);
-                const totalData = getChartData(() => true); 
-
-                createOrUpdateChart('daily', dailyCtx, 'Vitórias de Hoje', dailyData);
-                createOrUpdateChart('weekly', weeklyCtx, 'Últimos 7 dias', weeklyData);
-                createOrUpdateChart('monthly', monthlyCtx, 'Vitórias no Mês', monthlyData);
-                createOrUpdateChart('total', totalCtx, 'Vitórias Totais', totalData);
-            }
-
-            function getChartData(filterFn) {
-                const dataMap = players.reduce((acc, player) => {
-                    const winCount = player.wins.filter(filterFn).length;
-                    if (winCount > 0) {
-                        acc[player.name] = winCount;
-                    }
-                    return acc;
-                }, {});
-
-                const sortedLabels = Object.keys(dataMap).sort((a, b) => dataMap[b] - dataMap[a]);
-                const sortedData = sortedLabels.map(label => dataMap[label]);
-
-                return { labels: sortedLabels, data: sortedData };
-            }
-
-            function createOrUpdateChart(chartId, ctx, label, data) {
-                const isDarkMode = body.classList.contains('dark-mode');
-                const textColor = isDarkMode ? '#e0e0e0' : '#2c3e50';
-
-                if (charts[chartId]) {
-                    charts[chartId].destroy();
-                }
-
-                charts[chartId] = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: data.labels,
-                        datasets: [{
-                            label: label,
-                            data: data.data,
-                            backgroundColor: 'rgba(36, 55, 130, 0.7)',
-                            borderColor: 'rgba(36, 55, 130, 1)',
-                            borderWidth: 1,
-                            borderRadius: 4
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    label: function (context) {
-                                        return ` ${context.raw} vitórias`;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: { beginAtZero: true, ticks: { color: textColor, stepSize: 1 } },
-                            x: { ticks: { color: textColor } }
-                        },
-                        responsive: true
-                    }
-                });
-            }
-
-            function render() {
-                renderPlayers();
-                renderCharts();
-            }
-
-            // --- EVENT LISTENERS ---
-            addPlayerButton.addEventListener('click', addPlayer);
-            playerInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') addPlayer();
-            });
-            resetButton.addEventListener('click', resetData);
-
-            // --- RENDERIZAÇÃO INICIAL ---
-            render();
+            
+            // A chamada inicial do render foi movida para dentro do showApp()
         });
     </script>
-    </body>
+
+</body>
+</html>
+</body>
 </html>
