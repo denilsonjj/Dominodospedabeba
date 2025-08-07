@@ -331,20 +331,30 @@
             }
             
             function renderCharts(playersForView) {
-                const now = new Date();
-                const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-                const sevenDaysAgo = new Date(new Date().setDate(now.getDate() - 6)).setHours(0, 0, 0, 0);
-                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-                const winsInGroup = playersForView.flatMap(p => p.wins);
-                const dailyData = getChartData(playersForView, winsInGroup.filter(win => win.ts >= todayStart));
-                const weeklyData = getChartData(playersForView, winsInGroup.filter(win => win.ts >= sevenDaysAgo));
-                const monthlyData = getChartData(playersForView, winsInGroup.filter(win => win.ts >= monthStart));
-                const totalData = getChartData(playersForView, winsInGroup);
-                createOrUpdateChart('daily', dailyCtx, 'Vitórias de Hoje', dailyData);
-                createOrUpdateChart('weekly', weeklyCtx, 'Últimos 7 dias', weeklyData);
-                createOrUpdateChart('monthly', monthlyCtx, 'Vitórias no Mês', monthlyData);
-                createOrUpdateChart('total', totalCtx, 'Vitórias Totais (Geral)', totalData);
-            }
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const sevenDaysAgo = new Date(new Date().setDate(now.getDate() - 6)).setHours(0, 0, 0, 0);
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+
+    // AQUI ESTÁ A CORREÇÃO PRINCIPAL!
+    // Filtramos as vitórias para pertencerem SOMENTE ao grupo ativo.
+    const winsInGroup = playersForView
+        .flatMap(p => p.wins || []) // Usar '|| []' evita erros se 'wins' for nulo
+        .filter(win => win.grupo === activeGroup);
+
+    // O resto da função continua igual, mas agora receberá os dados corretos.
+    const dailyData = getChartData(playersForView, winsInGroup.filter(win => win.ts >= todayStart));
+    const weeklyData = getChartData(playersForView, winsInGroup.filter(win => win.ts >= sevenDaysAgo));
+    const monthlyData = getChartData(playersForView, winsInGroup.filter(win => win.ts >= monthStart));
+    const totalData = getChartData(playersForView, winsInGroup); // Total do grupo ativo
+
+    createOrUpdateChart('daily', dailyCtx, 'Vitórias de Hoje', dailyData);
+    createOrUpdateChart('weekly', weeklyCtx, 'Últimos 7 dias', weeklyData);
+    createOrUpdateChart('monthly', monthlyCtx, 'Vitórias no Mês', monthlyData);
+    // Sugestão: Alterar o título do último gráfico para refletir que é o total do grupo
+    createOrUpdateChart('total', totalCtx, `Vitórias Totais (${activeGroup.charAt(0).toUpperCase() + activeGroup.slice(1)})`, totalData);
+}
+
 
             function getChartData(playersForView, winsToCount) {
                 const playerNames = playersForView.map(p => p.name);
